@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Minds</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #0B0C10;
+            color: #C5C6C7;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #1F2833;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeInDown 1s;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #66FCF1, #45A29E);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+        }
+
+        .logo-circle span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1F2833;
+        }
+
+        .header h1 {
+            color: #66FCF1;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Navigation Styles */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #C5C6C7;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: #66FCF1;
+            color: #1F2833;
+            transform: translateY(-2px);
+        }
+
+        /* Toggle Button */
+        .toggle-button {
+            background: #66FCF1;
+            color: #1F2833;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background: #45A29E;
+            transform: translateY(-2px);
+        }
+
+        /* Slider Styles */
+        .slider {
+            margin-top: 1rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1F2833, #0B0C10);
+            border-radius: 10px;
+            color: #C5C6C7;
+            font-size: 1.2rem; /* Increased base font size */
+            text-align: left;
+            overflow: hidden;
+            position: relative;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 1s ease;
+            width: 80%;
+            text-align: center;
+            font-size: 1.5rem; /* Increased font size for slider text */
+            line-height: 1.8; /* Adjusted line height for better readability */
+        }
+
+        .slider p.active {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Button Grid */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+
+        .design-button {
+            background: #1F2833;
+            border: 2px solid #66FCF1;
+            padding: 1.5rem;
+            border-radius: 10px;
+            color: #C5C6C7;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .design-button:hover {
+            background: #66FCF1;
+            color: #1F2833;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 252, 241, 0.3);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #1F2833;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: #C5C6C7;
+            border-top: 2px solid #66FCF1;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #C5C6C7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #66FCF1;
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: #C5C6C7;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #66FCF1;
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .toggle-button {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .slider {
+                padding: 1rem;
+                height: 400px;
+                font-size: 1rem; /* Adjusted font size for mobile */
+            }
+
+            .slider p {
+                font-size: 1.2rem; /* Adjusted font size for mobile */
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-circle">
+                <span>PM</span>
+            </div>
+            <h1>Prompt Minds</h1>
+        </div>
+        <div class="toolbar">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="toggle-button">Toggle View</button>
+        </div>
+    </header>
+
+    <!-- Slider for Text -->
+    <div class="slider">
+        <p class="active">Welcome to Prompt Minds – Your All-in-One Online Tool Hub!</p>
+        <p>At Prompt Minds, we provide a powerful collection of 20+ smart tools designed to simplify your daily tasks and enhance productivity. Whether you’re a content creator, designer, student, or professional, our tools help you work smarter and faster.</p>
+        <p>Need to remove backgrounds from images effortlessly? Want to count words in your documents or convert text into eye-catching AI-generated images? We have it all! Our platform is built to provide quick, efficient, and high-quality results without any complicated steps.</p>
+        <p>With a user-friendly interface and seamless functionality, Prompt Minds ensures that you get instant access to essential utilities—no downloads, no registrations, just pure efficiency! Our AI-powered tools are designed to save time, boost creativity, and offer solutions for everyday digital needs.</p>
+        <p>From image editing to text processing and AI-based creativity tools, we continuously add new features to make your experience even better. Our vibrant and intuitive design ensures a smooth workflow, making complex tasks easier than ever.</p>
+        <p>Discover the future of online utilities at Prompt Minds and take your productivity to the next level. Explore our tools today and experience the power of smart automation!</p>
+    </div>
+
+    <div class="container">
+        <div class="button-grid" id="buttonContainer">
+            <!-- Buttons will be generated dynamically -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank">&#xf09a;</a> <!-- Facebook Icon -->
+            <a href="https://twitter.com" target="_blank">&#xf099;</a> <!-- Twitter Icon -->
+            <a href="https://linkedin.com" target="_blank">&#xf0e1;</a> <!-- LinkedIn Icon -->
+            <a href="https://instagram.com" target="_blank">&#xf16d;</a> <!-- Instagram Icon -->
+        </div>
+        <p>&copy; 2025 Prompt Minds. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Generate dynamic buttons with links
+        const buttonContainer = document.getElementById('buttonContainer');
+        const buttonNames = [
+            "Design 1", "Design 2", "Design 3", "Design 4", "Design 5",
+            "Design 6", "Design 7", "Design 8", "Design 9", "Design 10",
+            "Design 11", "Design 12", "Design 13", "Design 14", "Design 15",
+            "Design 16", "Design 17", "Design 18", "Design 19", "Design 20"
+        ];
+        const buttonLinks = [
+            "#", "#", "#", "#", "#", "#", "#", "#", "#", "#",
+            "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"
+        ]; // Add your links here
+
+        buttonNames.forEach((name, index) => {
+            const button = document.createElement('button');
+            button.className = 'design-button';
+            button.innerHTML = name;
+            button.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s forwards`;
+            button.addEventListener('click', () => {
+                window.open(buttonLinks[index], '_blank');
+            });
+            buttonContainer.appendChild(button);
+        });
+
+        // Slider functionality
+        const paragraphs = document.querySelectorAll('.slider p');
+        let currentIndex = 0;
+
+        function showNextParagraph() {
+            paragraphs[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % paragraphs.length;
+            paragraphs[currentIndex].classList.add('active');
+        }
+
+        setInterval(showNextParagraph, 1500); // Change paragraph every 5 seconds
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Toggle button functionality
+        const toggleButton = document.querySelector('.toggle-button');
+        toggleButton.addEventListener('click', () => {
+            alert("Toggle between mobile and desktop views here!");
+        });
+    </script>
+</body>
+</html>
