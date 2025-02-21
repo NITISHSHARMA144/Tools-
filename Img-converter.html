@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ultimate File Converter | Blogger</title>
+    
+    <!-- CSS -->
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --background: #ffffff;
+            --text: #1f2937;
+            --card-bg: rgba(248, 250, 252, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --primary: #818cf8;
+            --secondary: #a78bfa;
+            --background: #0f172a;
+            --text: #f8fafc;
+            --card-bg: rgba(30, 41, 59, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .converter-box {
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            background: rgba(255,255,255,0.05);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        #preview {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-top: 2rem;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        select {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        #downloadBtn {
+            background: linear-gradient(45deg, #10b981, #34d399);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: none;
+            margin: 0 auto;
+            transition: transform 0.2s;
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 File Converter</h1>
+            <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</button>
+        </div>
+
+        <div class="converter-box">
+            <input type="file" id="fileInput" accept="image/*, application/pdf">
+            <label for="fileInput" class="upload-btn">
+                📁 Choose File
+            </label>
+            <p style="margin-top: 1rem; opacity: 0.8;">or Drag & Drop here</p>
+            <img id="preview" alt="Preview">
+        </div>
+
+        <div class="options">
+            <select id="formatSelect">
+                <option value="png">PNG</option>
+                <option value="jpeg">JPEG</option>
+                <option value="webp">WEBP</option>
+                <option value="bmp">BMP</option>
+                <option value="pdf">PDF</option>
+                <option value="svg">SVG</option>
+            </select>
+        </div>
+
+        <button id="downloadBtn">🚀 Download Now</button>
+
+        <div class="loading">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.setAttribute('data-theme',
+                document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+            );
+            localStorage.setItem('theme', document.body.getAttribute('data-theme'));
+        }
+
+        // Initial Theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+
+        // File Handling
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const formatSelect = document.getElementById('formatSelect');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const loading = document.querySelector('.loading');
+
+        fileInput.addEventListener('change', handleFileSelect);
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file && (file.type.startsWith('image/') || file.type === 'application/pdf')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    downloadBtn.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Conversion Logic
+        downloadBtn.addEventListener('click', async () => {
+            loading.style.display = 'flex';
+            const format = formatSelect.value;
+            
+            try {
+                if (format === 'pdf') {
+                    await convertToPDF();
+                } else if (format === 'svg') {
+                    convertToSVG();
+                } else {
+                    await convertToImage(format);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+
+        async function convertToImage(format) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.src = preview.src;
+            await new Promise(resolve => img.onload = resolve);
+            
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.download = `converted.${format}`;
+                a.href = url;
+                a.click();
+            }, `image/${format === 'jpg' ? 'jpeg' : format}`);
+        }
+
+        async function convertToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const img = new Image();
+            
+            img.src = preview.src;
+            await new Promise(resolve => img.onload = resolve);
+            
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = (img.height * pageWidth) / img.width;
+            
+            doc.addImage(img, 'JPEG', 0, 0, pageWidth, pageHeight);
+            doc.save('converted.pdf');
+        }
+
+        function convertToSVG() {
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${preview.naturalWidth}" height="${preview.naturalHeight}">
+                <image href="${preview.src}" width="100%" height="100%"/>
+            </svg>`;
+            
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.download = 'converted.svg';
+            a.href = url;
+            a.click();
+        }
+
+        // Drag & Drop
+        const dropZone = document.querySelector('.converter-box');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+            dropZone.addEventListener(event, preventDefaults);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(event => {
+            dropZone.addEventListener(event, () => {
+                dropZone.style.backgroundColor = 'rgba(255,255,255,0.1)';
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(event => {
+            dropZone.addEventListener(event, () => {
+                dropZone.style.backgroundColor = 'rgba(255,255,255,0.05)';
+            });
+        });
+
+        dropZone.addEventListener('drop', handleDrop);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const file = dt.files[0];
+            if (file) handleFileSelect({ target: { files: [file] } });
+        }
+    </script>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>
