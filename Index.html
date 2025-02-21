@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Tools Website</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .tool-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .tool-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .tool-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+        }
+
+        .tool-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .tool-card a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .tool-card a:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tool-card {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            nav a {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Your Tools Website</h1>
+        <p>All-in-one solution for image and PDF tools</p>
+    </header>
+
+    <nav>
+        <a href="#image-tools">Image Tools</a>
+        <a href="#pdf-tools">PDF Tools</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="container">
+        <section id="image-tools">
+            <h2>Image Tools</h2>
+            <div class="tool-section">
+                <div class="tool-card">
+                    <h3>Image Compressor</h3>
+                    <p>Compress your images without losing quality.</p>
+                    <a href="#">Use Tool</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Image Resizer</h3>
+                    <p>Resize your images to any dimension.</p>
+                    <a href="#">Use Tool</a>
+                </div>
+                <div class="tool-card">
+                    <h3>Image Converter</h3>
+                    <p>Convert images to different formats.</p>
+                    <a href="#">Use Tool</a>
+                </div>
+                <!-- Add more image tools as needed -->
+            </div>
+        </section>
+
+        <section id="pdf-tools">
+            <h2>PDF Tools</h2>
+            <div class="tool-section">
+                <div class="tool-card">
+                    <h3>PDF Compressor</h3>
+                    <p>Reduce the size of your PDF files.</p>
+                    <a href="#">Use Tool</a>
+                </div>
+                <div class="tool-card">
+                    <h3>PDF Merger</h3>
+                    <p>Merge multiple PDF files into one.</p>
+                    <a href="#">Use Tool</a>
+                </div>
+                <div class="tool-card">
+                    <h3>PDF Splitter</h3>
+                    <p>Split a PDF into multiple files.</p>
+                    <a href="#">Use Tool</a>
+                </div>
+                <!-- Add more PDF tools as needed -->
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We provide a wide range of tools to help you manage and optimize your images and PDFs efficiently. Our tools are designed to be user-friendly and accessible to everyone.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or feedback, feel free to reach out to us at <a href="mailto:support@yourtoolswebsite.com">support@yourtoolswebsite.com</a>.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Your Tools Website. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
